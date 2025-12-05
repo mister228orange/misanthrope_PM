@@ -1,0 +1,19 @@
+setup fastapi project with db, backend, frontend, balancer and adminer I
+create and setup vds gitlab repo for project I
+create workers sqlmodels B
+Designing a complete database model (UML/DBML) based on project workflows. recording of jobs hours, salaries, material spending, project extended, work overflows, project progressing, reports management B
+update workers models B
+create orm mixins -active and -timestamps B
+fix date formatting issue on frontend F
+create telegram bot B
+create token registrations in bot workflow B
+create worker report resending to head of project B
+saving to db reports and other users data B
+deploy tg_bot on vds I
+add logging to file at vds I
+change main color for react application F
+create tool for hard reset alembic migrations (at start of project development, too many conflicts of migrations and no data to lose) B
+repair os after hard crash ubuntu, setup backups to prevent it in future I
+create workflow of job logging to ERP system with real world context states B
+design workflow to make usable interface for telegram bot, customizable for any application sphere with same project-orientired workflows B
+make layuout of prev desicion as building tg_bot by xml file, received from draw.io by drawing human nicelooking scheme of dialog scenarious, without coding B

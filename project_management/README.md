@@ -1,4 +1,4 @@
-# Misanthope PM
+# Project Manager Automation
 
 *A lightweight system for analyzing engineering output, estimating task effort, and automating project-management bullshit.*
 
@@ -152,4 +152,3 @@ python3 project_manager.py
 ```bash
 ollama run deepseek-r1:8b
 ```
-*A lightweight system for analyzing engineering output, estimating task effort, and automating project-management bullshit.*

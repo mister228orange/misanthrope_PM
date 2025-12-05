@@ -1,0 +1,73 @@
+create common inventory component F
+add CRUDly as parent to every model inventory domain B
+fix inventory schemas B
+fix inventory CRUDs B
+translate login page to Russian F
+recreate components - inventory - inventory_type F
+create CRUDs for inventory_category B
+create metaclass to implements default CRUDs B
+fix all 20 tables for use metaCRUDs instead custom B
+fix inventory components F
+create new tab at inventory component F
+reroute workers component from items to workers endpoint F
+create new tab at inventory component F
+create new model inventory category B
+create extended read endpoint to get detailed inventory B
+resolve npm install issue on staging I
+create jinja2 template for .env for new clients I
+update docker compose on staging to unclude new containers redis celery etc I
+create script to generate client.env file I
+fix workers CRUDs B
+fix 500 error inventory backend B
+Deploy app to vds staging I
+change logo on register page and translate page F
+change logo on login page F
+create VDS accs and fix login issue I
+add inventory actions update triggers B
+add worker component to front page F
+make timestamps int to reducing resource usage and make migrations B
+implement use state react managment for is_active F
+fix login issue and setup containers routing I
+create startup bash script for local development I
+create endpoint returned tg_username by tg_id B
+fix docker buildings issue I
+create ORM models (badly task) B
+resolve git conflicts between local staging and origin I
+create endpoint returned tg_id by tg_username B
+change color on user settings page F
+set default ordering for get_many_object endpoints B
+change inventory models relations B
+create counterparty models and table B
+change tg_id type to 8 bytes int B
+remind workflow, extend db schema by 2 tables, documentate that B
+add sorting by tools to table inventory_actions F
+create Dockerfile for TG_bot I
+fix inventory actions trigger deactivating bug B
+actualizate dbdiagram after adding tables I
+create inventory category actionsmenu component with all nested F
+create inventory type actionsmenu component with all nested F
+refactor inventory folder structure F
+add counterparty table to nomenclature page F
+fix income field at inventory int issues F
+make CRUDly inherent for - material_type, -jobs_type, -builds and rewrite cruds and routes B
+create nomenclature page with 4 tables with nested actionsmenu F
+add joinedload to jobs_type endpoint B
+add counterparty endpoints B
+create counterparty CRUDs B
+create routes for inventory category + migrate db B
+setup celery and make workflows for -background tasks -scheduled tasks B
+fix worker table, add filtering by active column, add tooltiping F
+add celery infrastructure to docker compose I
+modify project models to store current_progress and project state B
+clean up and separate docker composes to store 3 override-states for local dev and prod I
+income field convert to int B
+create trigger for inventory insert B
+make frontend view of income as date F
+make current progress computed field cacheable B
+fix buildobj reading bug B
+create custom triggering to inventory UI F
+fix select filtering nomenclature bug F
+add CRUDs for specification_source B
+update dbdiagram I
+add model specification_source; extend jobs_estimations table B
+add specification_source endpoints B

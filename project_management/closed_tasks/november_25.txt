@@ -1,0 +1,55 @@
+create simple parser for xlsx, csv files of specification. B
+create routes for jobtypecategorytree. B
+add hard delete specification source endpoint B
+prepare progress domain at backend for frontend needs. B
+add triggers to recalc current project progress. B
+make compute progress once executable. B
+update staging add tg_bot env deploy. I
+create cli tool to collect context from repo frontend for llm. I
+remster session store for tg to avoid sqlite concurrent access. B
+add specification title badge colorizing and sorting. F
+fix endpoint tg entity use samesession as bot. B
+make dynamic update for specsources. F
+create projec layout and routing. F
+add filtration to project endpoint. B
+add report sending to backend from bot. B
+make workflow for workerreport building. B
+create jobsestimation component. F
+change db of bot to main postgres. I
+move secrets to env tg bot. I
+full refactor tg bot for production state. B
+rework specification card use chakra comp. F
+absolutule perfect state control of planning component (6 nesteds). F
+rework title inline editing specsource. F
+make migrations; update openapi. B
+separate db to 2 logic instances. I
+add tooltiping for productivity rate field worker component. F
+add 2 cases of worker tg adding. F
+pretify username input; hide toasts to logs. F
+move tg_bot to main compose. I
+optimize sql query of project detailed. B
+set triggers for salaries recalc. B
+create workers multiselect component. F
+move peroids schedulers to env. I
+create endpoint project detailed. B
+create dashboard layout. F
+create specification source card. F
+remind planning component. F
+add typing search to jiobs types select. F
+remaster projects getting endpoints. B
+create current progress computed field to prjects. B
+create specification detailed component with jobs estimation management. F
+set stage by click on badge in jobs estimation table. F
+create models for jobs type category tree. B
+refactor sqlmodels to centralized imports. B
+resolve sqlalchemy circular imports issue. B
+resolve pydantic circular imports issue. B
+create core of application UI \ UX design (scenarious of setup projects, view edit develop, and etc). F
+write tgbot readme; prepare repo for merging to main compose. I
+create add specification source component. F
+create add project component. F
+bind dashboard layout to backend. F
+create endpoints for receiving reports from tg bot. B
+create workflow to add specification source with file. B
+write collector of models imports at whole project. B
+create get or create endpoint for jobs types. B
