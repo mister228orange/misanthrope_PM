@@ -5,6 +5,7 @@
 This project eliminates the need for slow, incompetent PM intermediaries by automatically extracting work metrics from Git history, matching closed tasks with real development effort, and generating LLM-based estimations.
 
 ## Project Structure
+```text
 .
 ├── closed_tasks
 │   ├── november_25.txt
@@ -18,6 +19,8 @@ This project eliminates the need for slow, incompetent PM intermediaries by auto
 ├── todo
 ├── utils.py
 └── uv.lock
+```
+
 
 
 
