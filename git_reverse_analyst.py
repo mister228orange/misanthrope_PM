@@ -1,8 +1,8 @@
-from asyncio import Task
 from typing import Any, Generator
 from models import ClosedTask
 from ollama import Client, GenerateResponse
 import pandas as pd
+
 
 class GitReverseAnalyst:
     def __init__(self, tasks):
@@ -11,27 +11,27 @@ class GitReverseAnalyst:
         self.setup_prompt = f"base on this tasks to find optimal abstract level of setted tasks, and separate close to original. {self.etalon_tasks}"
         self.base_prompt = 'You are a project manager assistant.\
               Analyze the following git logs and extract discrete tasks that were completed.\
-                  \nOutput in a structured format: { tasks:[task description, category (B/F/I)], unfinished_moves[*where in free format describe for your future analyze context of previous state*].\
+                  \nOutput in a structured format: { tasks:[task description, category (B/F/I)], unfinished_moves: str(*where in free format describe for your future analyze context of previous state*).\
                   \nLogs:\n{logs}'
         
         self.client = Client(
             host='http://localhost:11434',
             headers={'x-some-header': 'some-value'}
             )
-        deepseek = "deepseek-r1:8b"    
-    s
+        self.model_name = "gemma3:4b"
+
     def analyze_git_logs(self, logs: pd.DataFrame) -> list[ClosedTask]:
         g = logs.groupby(pd.Grouper(key='Date', freq='week'))
         chunks = [group for name, group in g]
         tasks_doiting = []
+        unfifnished_moves = None
         for chunk in chunks:
-            response = self.analyze_chunk(chunk, [])
+            response = self.analyze_chunk(chunk, unfifnished_moves)
             tasks, unfinished_moves = self.parse_response(response)
+            tasks_doiting += tasks
     
 
-    def analyze_chunk(self, chunk: pd.DataFrame, unfinished_moves: list[str]) -> Generator[GenerateResponse, Any, None]:
-
-
+    def analyze_chunk(self, chunk: pd.DataFrame, unfinished_moves: str) -> Generator[GenerateResponse, Any, None]:
         prompt_tail = f"Previous context{unfinished_moves}"
         full_prompt = f"{self.setup_prompt}\n{self.base_prompt}\n{prompt_tail} {chunk.to_json()}"
         yield self.client.generate(model="deepseek-r1:8b", prompt = full_prompt)
