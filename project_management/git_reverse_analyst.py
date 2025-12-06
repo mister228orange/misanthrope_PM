@@ -1,7 +1,7 @@
 from asyncio import Task
-from typing import Any
+from typing import Any, Generator
 from models import ClosedTask
-from ollama import Client
+from ollama import Client, GenerateResponse
 import pandas as pd
 
 class GitReverseAnalyst:
@@ -19,17 +19,17 @@ class GitReverseAnalyst:
             headers={'x-some-header': 'some-value'}
             )
         deepseek = "deepseek-r1:8b"    
-
+    s
     def analyze_git_logs(self, logs: pd.DataFrame) -> list[ClosedTask]:
         g = logs.groupby(pd.Grouper(key='Date', freq='week'))
         chunks = [group for name, group in g]
         tasks_doiting = []
         for chunk in chunks:
-            response = analyze_chunk(chunk, [])
-            tasks, unfinished_moves = parse_response(response)
+            response = self.analyze_chunk(chunk, [])
+            tasks, unfinished_moves = self.parse_response(response)
     
 
-    def analyze_chunk(self, chunk: pd.DataFrame, unfinished_moves: list[str]) -> [Any Any Any]:
+    def analyze_chunk(self, chunk: pd.DataFrame, unfinished_moves: list[str]) -> Generator[GenerateResponse, Any, None]:
 
 
         prompt_tail = f"Previous context{unfinished_moves}"
