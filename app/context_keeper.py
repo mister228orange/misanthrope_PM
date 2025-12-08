@@ -3,27 +3,22 @@ from typing import Optional, List, Tuple
 from pathlib import Path
 import pandas as pd
 
-from misanthrope_pm.core.models import ClosedTask
-from misanthrope_pm.data.loader import load_closed_tasks, load_git_logs
-from misanthrope_pm.data.validator import validate_data
+from app.models import ClosedTask
+from app.utils import load_closed_tasks, load_git_logs
+
 
 
 class PMContext:
     """Main context manager for project data"""
 
-    def __init__(self, data_dir: str = "./data"):
-        self.data_dir = Path(data_dir)
+    def __init__(self, data_dir: str = "../data", project_title="nodis_project"):
+        self.data_dir = Path(data_dir) / project_title
         self.data_dir.mkdir(exist_ok=True)
 
         # Load and validate data
         print("Loading project data...")
         self.closed_tasks = load_closed_tasks(self.data_dir / "closed_tasks")
         self.git_logs = load_git_logs(self.data_dir / "git.logs")
-
-        # Validate data quality
-        validation_result = validate_data(self.closed_tasks, self.git_logs)
-        if not validation_result.is_valid:
-            print(f"Warning: Data validation issues: {validation_result.issues}")
 
         # Preprocess data
         self._preprocess_data()
