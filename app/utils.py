@@ -19,7 +19,7 @@ def load_closed_tasks(folder_path: Path) -> list[ClosedTask]:
                             min_skill_level=None,
                                planned_at=None,
                                started_at=None,
-                               finished_at=int(datetime(2025, datetime.strptime(file_path.stem.split('_')[0], '%B').month, 30, 21, 20, 0).timestamp())
+                               finished_at=int(datetime(datetime.now().year, datetime.strptime(file_path.stem.split('_')[0], '%B').month, 30, 21, 20, 0).timestamp())
                             )
                     for line in f.readlines()
                     ]
@@ -45,3 +45,17 @@ def load_git_logs(filename="git.logs"):
         df["timestamp"] = df["date"].apply(pd.Timestamp) #type: ignore
         df = df.set_index("date")
         return df
+
+
+# def f():
+#     i = 1
+#     while 1:
+#         yield i
+#         i += 3
+#         if i > 100:
+#             return i ** i
+
+# for k in f():
+#     print(k)
+# finally:
+#     print('huy')

@@ -1,13 +1,15 @@
+from pathlib import Path
 from typing import Any, Generator
-from models import ClosedTask
+from models import Category, ClosedTask
 from ollama import Client, GenerateResponse
 import pandas as pd
 import json
+from datetime import datetime, date
 
 
 class GitReverseAnalyst:
-    def __init__(self, tasks, model_name="gemma3:12b"):
-
+    def __init__(self, tasks, project_title,model_name="gemma3:12b", data_dir: str = "../data"):
+        self.data_dir = Path(data_dir) / project_title
         self.etalon_tasks = tasks
         self.setup_prompt = f"""
             You are a project manager assistant.
@@ -55,7 +57,7 @@ class GitReverseAnalyst:
             And dont blind believe them, main data is git commit message.
             """
         
-        self.client = Client(
+        self.client: Client = Client(
             host='http://localhost:11434',
             headers={'x-some-header': 'some-value'}
         )
@@ -68,15 +70,19 @@ class GitReverseAnalyst:
         commits.reverse()
         print(commits[0]['title'], commits[0].keys())
         
-        tasks_doiting = []
+        tasks_doiting: list[ClosedTask] = []
         unfinished_moves = ""
+        total_chars = 0
+        total__time = 0
         for i in range(2, len(commits)):
             attempts = 3
             while attempts > 0:
                 try:
                     print(f'Handle {i} commit {commits[i]['title']} with length {commits[i]['text_size']}')
+                    total_chars += commits[i]['text_size']
                     response = self.analyze_commit(commits[i], unfinished_moves)
-                    print(f'Receive response {"successfully" if response.done else "error"} for {int(response.total_duration / 10 ** 9)} seconds \n Text: {response.response}') 
+                    print(f'Receive response {"successfully" if response.done else "error"} for {int(response.total_duration / 10 ** 9)} seconds \n Text: {response.response}')
+                    total__time += response.total_duration / 10 ** 9
                     tasks, unfinished_moves = self._parse_response(response, commits[i]['timestamp'])
                     tasks_doiting += tasks
                     break
@@ -84,10 +90,30 @@ class GitReverseAnalyst:
                     print(e)
                     attempts -= 1
             
-            yield tasks 
-        return tasks_doiting
-    
+            yield tasks, None
 
+        print(f"Git Reverse analyst handle {len(commits)} git commits and reinstate\
+               {len(tasks_doiting)} tasks with speed of {total_chars / total__time:.2f} chars per second.")
+        self.update_project_data(tasks_doiting)
+        self.last_handle_speed = total_chars / total__time
+        return tasks_doiting, total_chars / total__time
+    
+    def update_project_data(self, tasks: list[ClosedTask]) -> None:
+        # Todo add db and save tody
+        predict_dir = self.data_dir / 'predicted_tasks'
+        predict_dir.mkdir(exist_ok=True)
+        tasks_df = pd.DataFrame(tasks)
+        tasks_df['date'] = pd.to_datetime(tasks_df['finished_at'], unit='s')
+        tasks_df['month'] = tasks_df['date'].dt.month #type: ignore
+        tasks_df = tasks_df.set_index('date')
+        g = tasks_df.groupby(pd.Grouper(key='month'))
+        chunks = [(name, group) for name, group in g]
+        print(chunks)
+        for chunk in chunks:
+            filename = date(2000, chunk[0], 1).strftime('%B') + f'_{datetime.now().year%1000}.txt' # type: ignore
+            chunk[1].to_csv(predict_dir/filename)
+
+                        
     def analyze_chunk(self, chunk: pd.DataFrame, unfinished_moves: str) -> Generator[GenerateResponse, Any, None]:
         commits = chunk.to_dict('records')
         logs = [f'<commit_text>{commit['text'][:100000]}</commit_text> title:{commit['title']}\n' for commit in commits if 'initial commit' not in commit['title']]
@@ -152,17 +178,25 @@ class GitReverseAnalyst:
         return tasks, result['unfinished_moves']
  
 from context_keeper import context
-import datetime
 
-okt_tasks = context.get_tasks(datetime.datetime(2025, 10, 1), datetime.datetime(2025, 11, 1))
-analyst = GitReverseAnalyst(okt_tasks)
+
+okt_tasks = context.get_tasks(datetime(2025, 10, 1), datetime(2025, 11, 1))
+analyst = GitReverseAnalyst(okt_tasks, 'nodis_project')
 git_logs = context.get_logs()
 git_logs = git_logs[git_logs['title'] != 'initial commit']
 print(git_logs)
 task_predicted = []
-with  open("predicted_tasks.txt", 'w') as out:
-    for tasks in analyst.analyze_git_logs(git_logs): # type: ignore
+with open("all_predicted_tasks.txt", 'w') as out:
+    for tasks, speed in analyst.analyze_git_logs(git_logs): # type: ignore
         task_predicted += tasks
         out.write('\n'+'\n'.join([str(t) for t in tasks]))
+        if speed:
+            print(f"speed of work for {analyst.model_name} is {speed} chars per second")
+            break
 
-print(task_predicted)
+
+# task_predicted = [ClosedTask(text=line[:-2], category=Category(line[-1]),estimated_time=None, min_skill_level=None, planned_at=None, started_at=None, finished_at=None)for line in open("all_predicted_tasks.txt").readlines()]
+# print(task_predicted)
+# df = pd.DataFrame(task_predicted)
+# print(df)
+

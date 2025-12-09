@@ -1,4 +1,3 @@
-
 Implement CRUD operations for the Worker model. B
 Refactor global structure for improved organization. B
 Complete backend CRUD operations for mixins, workers, and users. B
@@ -65,6 +64,11 @@ Translate 'Don't have an account?' text and 'Sign Up' link to Russian. F
 Add .env to .gitignore I
 Include backend/app/api/routes in .gitignore B
 Update pyproject.toml to include telethon dependency version 1.41.2 B
+Update uv.lock to include telethon dependency version 1.41.2 B
+Update uv.lock to include pyaes dependency version 1.6.1 B
+Update uv.lock to include pyasn1 dependency version 0.6.1 B
+Update uv.lock to include rsa dependency version 4.9.1 B
+Update uv.lock to include telethon dependency version 1.41.2 B
 Translate and update signup route text labels to Russian. F
 Replace logo in signup route with nodis-logo.svg. F
 Remove inventory route and related configuration from routeTree.gen.ts. F
@@ -116,6 +120,8 @@ Create script to update staging environment I
 Create script to update staging environment I
 Modify Alembic migration script to allow nullable 'cost' column in inventory table. B
 Modify Alembic migration script to allow nullable 'category_id' column in inventory table. B
+Modify Alembic migration script to allow nullable 'cost' column in inventory table. B
+Modify Alembic migration script to allow nullable 'category_id' column in inventory table. B
 Update inventory actions table to handle potentially null old_holder F
 Update inventory actions table to display old holder's full name correctly. F
 Refactor edit inventory form to remove category_id field and update serial_number field. F
@@ -136,6 +142,7 @@ Implement Build Objects Table component to display build objects. F
 Create AddJobsType component for adding new job types. F
 Create AddMaterialType component for adding new material types. F
 Create AddBuildObject component for adding new build objects. F
+Develop NomenclaturePage component with Tabs for Jobs Types, Material Types, and Build Objects. F
 Implement Jobs Types Table component to display detailed information about job types. F
 Implement Material Types Table component to display material types. F
 Implement Build Objects Table component to display build objects. F
@@ -158,6 +165,7 @@ Fix bugs in edit inventory functionality. F
 Create counterparty model. B
 Implement date formatting for inventory purchase date. F
 Fix bugs in edit inventory functionality. F
+Create counterparty model. B
 Implement functionality to add, view, and manage counterparties within the nomenclature system. F
 Update frontend components to display and interact with counterparty data. F
 Refactor code to remove unused OpenAPI specification. I
@@ -169,8 +177,14 @@ Update base image version in frontend Dockerfile from node:20 to node:22 I
 Refactor backend API endpoint for reading build objects to expand the returned data B
 Create Inventory Type Actions Menu F
 Create Inventory Category Actions Menu F
+Create Inventory Type Actions Menu F
+Create Inventory Category Actions Menu F
 Update backend Dockerfile to use Python 3.12 B
 Update frontend query to use NomenclatureService.readBuildObjectsExpand() F
+Update backend Dockerfile to use Python 3.12 B
+Update frontend query to use NomenclatureService.readBuildObjectsExpand() F
+Implement soft delete functionality for jobs types in the nomenclature domain. B
+Implement unsafe delete functionality for jobs types in the nomenclature domain. B
 Implement soft delete functionality for build objects in the nomenclature domain. B
 Implement unsafe delete functionality for build objects in the nomenclature domain. B
 Update frontend components to reflect changes in nomenclature domain delete functionality. F
@@ -191,6 +205,7 @@ Implement 'AddBuildObject' component for creating new build objects. F
 Implement 'BuildObjectsTable' component to display build objects. F
 Implement 'AddCounterparty' component for creating new counterparties. F
 Implement 'CounterpartiesTable' component to display counterparties. F
+Implement codogeneration for nomenclature types. B
 Update nomenclature page to include jobs tab. F
 Fix bugs in the nomenclature module. B
 Complete the domain for the nomenclature module. B
@@ -212,6 +227,7 @@ Update BuildObject model to include a relationship with Project B
 Update Project model to inherit from CRUDly and add relationship with BuildObject B
 Create SpecificationSource model for storing project specifications B
 Create SpecificationSourceCreate model for creating specification sources B
+Create SpecificationSourceUpdate model for updating specification sources B
 Add 'specificationsource' functionality. B
 Implement progress computation for jobs by type. B
 Refactor ProjectPricing update method to use common_update. B
@@ -367,6 +383,9 @@ Reverse the sorting order of specifications in the Planning component. F
 Extend and beautify the planning component. F
 Fix state issues and margins in SpecificationDetailed component. F
 Add endpoint for report submitting B
+Add endpoint for report submitting B
+Refactor ReportCreate model to include a to_json method for direct JSON conversion. B
+Update message handler to send report data to backend via new ReportCreate model. B
 Refactor ReportCreate model to include a to_json method for direct JSON conversion. B
 Update message handler to send report data to backend via new ReportCreate model. B
 Apply Alembic migrations to update 'reports' table: change 'sender_tg_id' to BigInteger and remove 'author_tg_id' column. B
@@ -378,6 +397,7 @@ Implement report submission endpoint in the backend. B
 Develop the report page in the frontend. F
 Configure infrastructure for backend deployment. I
 Remove nodis--tg_bot.session file B
+Implement background task to calculate and update current salary for each worker based on job insertions, updates, and deletions. B
 Implement background task to calculate and update current salary for each worker based on job insertions, updates, and deletions. B
 Resolve pydantic issues in the backend. B
 Implement inventory actions in the backend. B
