@@ -1,12 +1,12 @@
 from pathlib import Path
 
-import pandas as pd
+import pandas as pd # type: ignore
 
 from models import ClosedTask, Category
 from datetime import datetime
 
-def load_closed_tasks() -> list[ClosedTask]:
-    folder_path = Path('./closed_tasks')
+def load_closed_tasks(folder_path: Path) -> list[ClosedTask]:
+
     tasks = []
     for file_path in folder_path.iterdir():
         # Check if the item is actually a file
@@ -14,12 +14,12 @@ def load_closed_tasks() -> list[ClosedTask]:
             with open(file_path, 'r') as f:
                 tasks += [
                     ClosedTask(text=line[:-3],
-                            category=Category(line[-2]),
+                            category=Category(line.strip()[-1]),
                             estimated_time=None,
                             min_skill_level=None,
                                planned_at=None,
                                started_at=None,
-                               finished_at=int(datetime(2025, file_path.stem, 30, 21, 20, 0).timestamp())
+                               finished_at=int(datetime(2025, datetime.strptime(file_path.stem.split('_')[0], '%B').month, 30, 21, 20, 0).timestamp())
                             )
                     for line in f.readlines()
                     ]
@@ -42,5 +42,6 @@ def load_git_logs(filename="git.logs"):
         ])
         df["date"] = pd.to_datetime(df["date"], errors="coerce")
         df["day"] = df["date"].dt.date
+        df["timestamp"] = df["date"].apply(pd.Timestamp) #type: ignore
         df = df.set_index("date")
         return df

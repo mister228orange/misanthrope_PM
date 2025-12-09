@@ -22,8 +22,6 @@ This project eliminates the need for slow, incompetent PM intermediaries by auto
 ```
 
 
-
-
 ## Core Idea
 
 The system ingests **real engineering data**, not Jira fantasies:
@@ -52,7 +50,7 @@ The system aggregates per day:
 Your code already loads an LLM model:
 ```python
 client = Client(host='http://localhost:11434')
-deepseek = "deepseek-r1:8b"
+deepseek = "gemma3:12b"
 ```
 # Project Manager Automation - Next Steps & Roadmap
 
@@ -145,10 +143,7 @@ Complete automation of: planning, prioritization, estimation, reporting, quality
 
 ## Installation
 
-```bash
-uv sync
-python3 project_manager.py
-```
+to be later
 
 ## Make sure you have an LLM endpoint running:
 

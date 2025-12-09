@@ -26,6 +26,15 @@ class ClosedTask:
     planned_at: Optional[int]
     started_at: Optional[int]
     finished_at: Optional[int]
+    
+
+    def __str__(self):
+        base =  f'{self.text} {self.category}'
+        if self.estimated_time:
+            base += f'\nEstimated time: {self.estimated_time} h'
+        if self.min_skill_level:
+            base += f'\nSkill need to: {self.min_skill_level}'
+        return base
 
 
 class Commit:

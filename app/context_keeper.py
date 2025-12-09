@@ -1,10 +1,10 @@
 from datetime import date, datetime
 from typing import Optional, List, Tuple
 from pathlib import Path
-import pandas as pd
+import pandas as pd # type: ignore
 
-from app.models import ClosedTask
-from app.utils import load_closed_tasks, load_git_logs
+from models import Category, ClosedTask
+from utils import load_closed_tasks, load_git_logs
 
 
 
@@ -13,12 +13,13 @@ class PMContext:
 
     def __init__(self, data_dir: str = "../data", project_title="nodis_project"):
         self.data_dir = Path(data_dir) / project_title
+        print(self.data_dir)
         self.data_dir.mkdir(exist_ok=True)
 
         # Load and validate data
         print("Loading project data...")
         self.closed_tasks = load_closed_tasks(self.data_dir / "closed_tasks")
-        self.git_logs = load_git_logs(self.data_dir / "git.logs")
+        self.git_logs = load_git_logs(str(self.data_dir / "git.logs"))
 
         # Preprocess data
         self._preprocess_data()
@@ -58,18 +59,22 @@ class PMContext:
 
     def get_tasks(
             self,
-            from_date: Optional[date] = None,
-            to_date: Optional[date] = None,
+            from_date: Optional[datetime] = None,
+            to_date: Optional[datetime] = None,
             category: Optional[str] = None
     ) -> List[ClosedTask]:
         """Get tasks filtered by date range and category"""
         filtered = []
+        if from_date:
+            from_timestamp = from_date.timestamp()
+        if to_date:
+            to_timestamp = to_date.timestamp()
 
         for task in self.closed_tasks:
             # Date filter
-            if from_date and task.finished_at and task.finished_at.date() < from_date:
+            if from_date and task.finished_at and task.finished_at > from_timestamp:
                 continue
-            if to_date and task.finished_at and task.finished_at.date() > to_date:
+            if to_date and task.finished_at and task.finished_at < to_timestamp:
                 continue
 
             # Category filter
@@ -82,8 +87,8 @@ class PMContext:
 
     def get_logs(
             self,
-            from_date: Optional[date] = None,
-            to_date: Optional[date] = None
+            from_date: Optional[datetime] = None,
+            to_date: Optional[datetime] = None
     ) -> pd.DataFrame:
         """Get git logs filtered by date range"""
         if self.git_logs.empty:
@@ -96,7 +101,7 @@ class PMContext:
         if to_date:
             mask = mask & (self.git_logs["day"] <= to_date)
 
-        return self.git_logs[mask].copy()
+        return self.git_logs[mask].copy() # type: ignore
 
     def get_daily_stats(self) -> pd.DataFrame:
         """Get daily productivity statistics"""
@@ -108,13 +113,19 @@ class PMContext:
             "total_tasks": len(self.closed_tasks),
             "total_commits": len(self.git_logs),
             "date_range": {
-                "first_task": min((t.finished_at for t in self.closed_tasks if t.finished_at), default=None),
-                "last_task": max((t.finished_at for t in self.closed_tasks if t.finished_at), default=None),
-                "first_commit": self.git_logs["day"].min() if not self.git_logs.empty else None,
-                "last_commit": self.git_logs["day"].max() if not self.git_logs.empty else None,
+                "first_task": datetime.fromtimestamp(min((t.finished_at for t in self.closed_tasks if t.finished_at), default=None)), #type: ignore
+                "last_task": datetime.fromtimestamp(max((t.finished_at for t in self.closed_tasks if t.finished_at), default=None)), #type: ignore
+                "first_commit": self.git_logs.index.min() if not self.git_logs.empty else None,
+                "last_commit": self.git_logs.index.max() if not self.git_logs.empty else None,
             },
             "categories": {
                 cat.name: len([t for t in self.closed_tasks if t.category == cat])
                 for cat in Category
             }
         }
+
+
+context = PMContext()
+print(context.closed_tasks)
+print(context.git_logs)
+print(context.get_summary())
