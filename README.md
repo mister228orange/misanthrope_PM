@@ -6,18 +6,27 @@ This project eliminates the need for slow, incompetent PM intermediaries by auto
 
 ## Project Structure
 ```text
-.
-├── closed_tasks
-│   ├── november_25.txt
-│   ├── october_25.txt
-│   └── september_25.txt
-├── git.logs
-├── models.py
-├── project_manager.py
+
+├── app
+│   ├── context_keeper.py
+│   ├── core
+│   │   ├── db.py
+│   │   └── __init__.py
+│   ├── git_reverse_analyst.py
+│   ├── main.py
+│   ├── models.py
+│   ├── predicted_tasks.txt
+│   ├── project_manager.py
+│   ├── quality_rater.py
+│   └── utils.py
+├── data
+│   └── some_project1
+│       ├── closed_tasks
+│       └── git.logs
+├── project_management
+│   └── todo
 ├── pyproject.toml
 ├── README.md
-├── todo
-├── utils.py
 └── uv.lock
 ```
 
