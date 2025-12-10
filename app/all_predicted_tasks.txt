@@ -1,3 +1,4 @@
+
 Implement CRUD operations for the Worker model. B
 Refactor global structure for improved organization. B
 Complete backend CRUD operations for mixins, workers, and users. B
@@ -80,13 +81,17 @@ Update docker-compose.yml to use dynamic TLS store I
 Change radio group color palette from teal to blue in Appearance.tsx F
 Modify Alembic migration script to alter the 'tg_id' column in the 'worker' table from INTEGER to BigInteger. B
 Update worker model to specify BigInteger for tg_id field. B
+
 Refactor worker management component to use new routing and query methods. F
 Update worker data structure and API calls to match new backend changes. B
 Implement pagination for worker list. F
 Rewrite backend for inventory and workers domain. B
 Fix minor frontend issues. F
+
 Remove BRIN index from InventoryAction id field. B
+
 Fix core deleting functionality by ID to use the correct class method. B
+
 Develop inventory component with tabs for inventory, types, and actions. F
 Implement pagination for worker list. F
 Implement worker table with actions menu. F
@@ -107,12 +112,14 @@ Implement backend API endpoint for reading worker data. B
 Implement frontend component for displaying worker data. F
 Implement backend API endpoint for deleting worker data. B
 Implement frontend component for killing worker data. F
+
 Add functionality to display inventory actions history. F
 Implement a component to display inventory actions history. F
 Add functionality to display inventory types. F
 Implement a component to display inventory types. F
 Fix inventory edit validation error in backend API. B
 Add onestringtable B
+
 Implement inventory actions table with tool alias, old and new holders. F
 Fetch inventory actions from the backend. F
 Fetch workers for inventory actions table. F
@@ -219,6 +226,7 @@ Update EditJobsType component to use MeasurementUnitSelect. F
 Update EditMaterialType component to include measurement unit field. F
 Refactor JobsType and MaterialType edit components to simplify data handling. F
 Update nomenclature routes to handle common update functionality. B
+
 Update Node.js version in Dockerfile to 20.19-alpine F
 Configure npm registry and retry installation in Dockerfile F
 Add generated_contexts to .gitignore I
@@ -266,8 +274,6 @@ Update scripts/update-staging.sh to use docker compose with traefik configuratio
 Create script to generate custom client environment files. I
 Implement Jinja2 template rendering for client environment generation. I
 Create directory structure for client environment files. I
-Remove client environment configuration file for sharazh-montazh. I
-Update .gitignore to include nodis_backend.session and clients_settings. I
 Remove client environment configuration file for sharazh-montazh. I
 Update .gitignore to include nodis_backend.session and clients_settings. I
 Implement a switch to filter workers by active status on the worker table. F

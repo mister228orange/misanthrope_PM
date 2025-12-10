@@ -17,3 +17,49 @@ repair os after hard crash ubuntu, setup backups to prevent it in future I
 create workflow of job logging to ERP system with real world context states B
 design workflow to make usable interface for telegram bot, customizable for any application sphere with same project-orientired workflows B
 make layuout of prev desicion as building tg_bot by xml file, received from draw.io by drawing human nicelooking scheme of dialog scenarious, without coding B
+Implement CRUD operations for the Worker model. B
+Refactor global structure for improved organization. B
+Complete backend CRUD operations for mixins, workers, and users. B
+Update Alembic environment file to import necessary models. B
+Create Alembic migration to remove foreign key constraint and column from the 'item' table. B
+Modify item API route to remove owner_id. B
+Update core models to include active status and disactivation timestamp. B
+Implement worker disactivation functionality in the backend. B
+Implement inventory domain with models and CRUD operations. B
+Create inventory routes for creating, reading, updating, and deleting inventory items. B
+Rename `InventoryType` table to `inventory_type` in the database. B
+Rename `Inventory` table to `inventory` in the database. B
+Rename `InventoryAction` table to `inventory_actions` in the database. B
+Create nomenclature domain models (MaterialType, JobsType, BuildObject) B
+Implement API endpoints for creating, reading, updating, and deleting material types B
+Implement API endpoints for creating, reading, updating, and deleting jobs types B
+Implement API endpoints for creating, reading, updating, and deleting build objects B
+Define API routes for nomenclature domain B
+Remove item creation, reading, updating, and deletion API routes and models. B
+Remove item API route inclusion from main API router. B
+Remove 'Item' model and associated imports from Alembic environment and migration script. B
+Implement soft deleting functionality using mixins in backend models. B
+Modify Project CRUD to utilize soft delete functionality. B
+Modify Project route to utilize soft delete functionality. B
+Modify Worker CRUD to utilize soft delete functionality. B
+Modify Worker route to utilize soft delete functionality. B
+Add `get_active` and `get_active_by_id` class methods to ActiveMixin. B
+Implement CRUD operations for Reports model. B
+Implement CRUD operations for Material model. B
+Implement CRUD operations for MaterialSpend model. B
+Implement CRUD operations for Job model. B
+Define data models for Reports, Materials, MaterialSpends, and Jobs. B
+Refactor: Correctly count total reports in `get_reports`. B
+Refactor: Correctly count total materials in `get_materials`. B
+Implement CRUD operations for materials B
+Implement CRUD operations for material spends B
+Implement CRUD operations for jobs B
+Implement CRUD operations for reports B
+Create a worker component for managing worker data. F
+Change HTML font size to 16px. F
+Update global CSS color palette to blue. F
+Update button recipe color palette to #007bff. F
+Implement inventory management UI with table display of inventory items, including name, type, quantity, status, unit, cost, location, creation date, and update date. F
+Add functionality to the inventory management UI to allow adding new inventory items. F
+Implement pagination for the inventory table. F
+Implement UI for editing and deleting inventory items. F

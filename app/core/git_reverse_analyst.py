@@ -29,12 +29,17 @@ class GitReverseAnalyst:
             {{
             "tasks": [
                 {{
-                "text": "string - a short but complete description of the task",
-                "category": "B | F | I"
+                "text": "string - short but complete task description",
+                "category": "B | F | I",
+                "purpose": "business | health"
                 }}
             ],
-            "unfinished_moves": "<summary of unresolved tasks or state>"
+            "unfinished_moves": "string"
             }}
+
+            Purpose rules:
+            - "business" = creates or changes product functionality (features, user value)
+            - "health" = refactoring, infra, cleanup, fixes, migrations, tech-debt
 
             Category explanation:
             - B = Backend
@@ -113,22 +118,6 @@ class GitReverseAnalyst:
             filename = date(2000, chunk[0], 1).strftime('%B') + f'_{datetime.now().year%1000}.txt' # type: ignore
             chunk[1].to_csv(predict_dir/filename)
 
-                        
-    def analyze_chunk(self, chunk: pd.DataFrame, unfinished_moves: str) -> Generator[GenerateResponse, Any, None]:
-        commits = chunk.to_dict('records')
-        logs = [f'<commit_text>{commit['text'][:100000]}</commit_text> title:{commit['title']}\n' for commit in commits if 'initial commit' not in commit['title']]
-        prompt_tail = f"Previous context{unfinished_moves}" if unfinished_moves else ""
-        full_prompt = f"{self.setup_prompt}\n{self.base_prompt}\n{prompt_tail} {logs}"
-        
-        return self.client.generate(
-            model=self.model_name, 
-            prompt = full_prompt,
-            options={
-                "keep_alive": 0,
-                "num_predict": 512,
-                "temperature": 0.15,
-                }
-        )
 
 
     def analyze_commit(self, commit, unfinished_moves=""):
@@ -165,15 +154,8 @@ class GitReverseAnalyst:
             text = "\n".join(text.split('\n')[1:-1])
         result = json.loads(text)
         print(result)
-        tasks = [ClosedTask(
-            text=task['text'], 
-            category=task['category'],
-            estimated_time=None, 
-            min_skill_level=None,
-            planned_at=None,
-            started_at=None,
-            finished_at=int(closed_at.timestamp())
-            ) for task in result['tasks']
+        tasks = [ClosedTask(task["text"], task["category"], task)
+            for task in result['tasks']
             ]
         return tasks, result['unfinished_moves']
  
@@ -200,3 +182,5 @@ with open("all_predicted_tasks.txt", 'w') as out:
 # df = pd.DataFrame(task_predicted)
 # print(df)
 
+
+#TODO add to closed tasks line amounts; rename fro task to action add converting from actions to buisness tasks
